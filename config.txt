@@ -1,0 +1,18 @@
+# --- USTAWIENIA GENERATORA ---
+GENERATE_NEW=0
+GENERATE_SIZE=10
+GENERATE_SYMMETRIC=0
+
+# --- USTAWIENIA ALGORYTMU ---
+# Dostepne: BB_BFS, BB_DFS_STACK, BB_DFS_REC, BB_LC, RNN
+ALGORITHM=BB_LC
+
+# Jesli 1: Najpierw odpala RNN zeby podac UpperBound dla B&B, co dramatycznie przyspiesza proces. Jeśli 0 to górne og. nieograniczone.
+USE_RNN_UPPER_BOUND=1
+
+TSP_FILE=data/matrix_11x11.atsp
+OPTIMAL_VALUE=149
+
+REPETITIONS=1
+OUTPUT_CSV=results/wyniki.csv
+SHOW_PROGRESS=1
