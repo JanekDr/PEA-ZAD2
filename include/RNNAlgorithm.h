@@ -5,7 +5,6 @@ class RNNAlgorithm : public IAlgorithm {
 private:
     long long best_cost;
     std::vector<int> best_path;
-    double execution_time_ms;
 
     void explore(int current_node, std::vector<bool>& visited, std::vector<int>& path, 
                  long long current_cost, const std::vector<std::vector<int>>& matrix, int dimension);
@@ -15,5 +14,4 @@ public:
     void run(const TSPInstance& instance, const ConfigManager& config) override;
     long long getBestCost() const override;
     std::vector<int> getBestPath() const override;
-    double getExecutionTimeMs() const override;
 };

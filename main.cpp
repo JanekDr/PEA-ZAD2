@@ -6,6 +6,7 @@
 #include "TSPInstance.h"
 #include "RNNAlgorithm.h"
 #include "BranchAndBound.h"
+#include "Timer.h"
 
 #ifdef _WIN32
     #include <windows.h>
@@ -64,10 +65,14 @@ int main() {
     long long overall_best_cost = -1;
     std::vector<int> overall_best_path;
 
+    Timer timer;
+
     for (int i = 0; i < config.repetitions; ++i) {
+        timer.start();
         algo->run(tsp, config);
+        timer.stop();
         
-        total_time_ms += algo->getExecutionTimeMs();
+        total_time_ms += timer.getElapsedMs();
         long long current_cost = algo->getBestCost();
         
         if (overall_best_cost == -1 || current_cost < overall_best_cost) {

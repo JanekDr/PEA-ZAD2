@@ -11,7 +11,6 @@ public:
     virtual void run(const TSPInstance& instance, const ConfigManager& config) = 0;
     virtual long long getBestCost() const = 0;
     virtual std::vector<int> getBestPath() const = 0;
-    virtual double getExecutionTimeMs() const = 0; // double do milisekund usera
 
 protected:
     static void displayProgress(int current, int total, const std::string& label, bool enabled) {

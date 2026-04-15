@@ -2,7 +2,7 @@
 #include <limits>
 #include <iostream>
 
-RNNAlgorithm::RNNAlgorithm() : best_cost(-1), execution_time_ms(0) {}
+RNNAlgorithm::RNNAlgorithm() : best_cost(-1) {}
 
 void RNNAlgorithm::explore(int current_node, std::vector<bool>& visited, std::vector<int>& path, 
                            long long current_cost, const std::vector<std::vector<int>>& matrix, int dimension) {
@@ -47,9 +47,6 @@ void RNNAlgorithm::explore(int current_node, std::vector<bool>& visited, std::ve
 }
 
 void RNNAlgorithm::run(const TSPInstance& instance, const ConfigManager& config) {
-    Timer timer;
-    timer.start();
-    
     int dimension = instance.getDimension();
     const auto& matrix = instance.getMatrix();
     best_cost = -1; 
@@ -68,11 +65,7 @@ void RNNAlgorithm::run(const TSPInstance& instance, const ConfigManager& config)
             displayProgress(start_node + 1, dimension, "RNN", config.show_progress);
         }
     }
-
-    timer.stop();
-    execution_time_ms = timer.getElapsedMs();
 }
 
 long long RNNAlgorithm::getBestCost() const { return best_cost; }
 std::vector<int> RNNAlgorithm::getBestPath() const { return best_path; }
-double RNNAlgorithm::getExecutionTimeMs() const { return execution_time_ms; }
