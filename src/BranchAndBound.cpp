@@ -16,7 +16,6 @@ void BranchAndBound::run(const TSPInstance& instance, const ConfigManager& confi
     best_cost = std::numeric_limits<long long>::max();
     best_path.clear();
 
-    // Obliczanie początkowego ograniczenia jeśli żądane
     if (config.use_rnn_upper_bound) {
         RNNAlgorithm rnn;
         ConfigManager tempConfig = config;
@@ -65,13 +64,11 @@ void BranchAndBound::runBFS(const std::vector<std::vector<int>>& initial_matrix,
             std::cout << "\r[BB_BFS] Odwiedzone wezly: " << nodes_visited << " | Aktualny best: " << best_cost << std::flush;
         }
 
-        // Klasyczne odcinanie - jeżeli aktualny koszt przekracza best_cost, gałąź odpada
         if (current->current_cost >= best_cost) {
             delete current;
             continue;
         }
 
-        // Lisc (ostatnie miasto przed powrotem usuniętym by nie zamykać pętli zbyt wcześnie)
         if (current->level == dimension) {
             int edge_back = initial_matrix[current->vertex][0];
             if (edge_back >= 0) {
@@ -85,17 +82,14 @@ void BranchAndBound::runBFS(const std::vector<std::vector<int>>& initial_matrix,
             continue;
         }
 
-        // Generowanie dzieci
         for (int i = 1; i < dimension; i++) {
-             // Jeżeli jeszcze nie byliśmy w tym mieście
              if (std::find(current->path.begin(), current->path.end(), i) == current->path.end()) {
                 
                 int edge_cost = initial_matrix[current->vertex][i];
-                if (edge_cost < 0) continue; // brak polaczenia
+                if (edge_cost < 0) continue;
                 
                 long long child_cost = current->current_cost + edge_cost;
                 
-                // Minitest czy opłaca się w ogóle wrzucać do kolejki
                 if (child_cost < best_cost) {
                     BBNode* child = new BBNode();
                     child->path = current->path;
@@ -230,7 +224,7 @@ void BranchAndBound::runDFSRecursive(const std::vector<std::vector<int>>& initia
 }
 
 void BranchAndBound::runLC(const std::vector<std::vector<int>>& initial_matrix, int dimension, bool show_progress) {
-    std::priority_queue<BBNode*, std::vector<BBNode*>, BBNode::CompareNode> pq;
+    std::vector<BBNode*> active_nodes;
     
     BBNode* root = new BBNode();
     root->path.push_back(0);
@@ -238,17 +232,29 @@ void BranchAndBound::runLC(const std::vector<std::vector<int>>& initial_matrix, 
     root->vertex = 0;
     root->level = 1;
     
-    pq.push(root);
+    active_nodes.push_back(root);
 
     long long nodes_visited = 0;
     
-    while (!pq.empty()) {
-        BBNode* current = pq.top();
-        pq.pop();
+    while (!active_nodes.empty()) {
+        int best_index = 0;
+        for (size_t i = 1; i < active_nodes.size(); ++i) {
+            if (active_nodes[i]->current_cost < active_nodes[best_index]->current_cost) {
+                best_index = i;
+            } else if (active_nodes[i]->current_cost == active_nodes[best_index]->current_cost) {
+                if (active_nodes[i]->level > active_nodes[best_index]->level) {
+                    best_index = i;
+                }
+            }
+        }
+
+        BBNode* current = active_nodes[best_index];
+        active_nodes.erase(active_nodes.begin() + best_index);
+
         nodes_visited++;
 
-        if (show_progress && nodes_visited % 100000 == 0) {
-            std::cout << "\r[BB_LC] Odwiedzone wezly: " << nodes_visited << " | Aktualny best: " << best_cost << " | Top cost: " << current->current_cost << std::flush;
+        if (show_progress && nodes_visited % 5000 == 0) {
+            std::cout << "\r[BB_LC_MANUAL] Odwiedzone: " << nodes_visited << " | Aktualny best: " << best_cost << " | Rozpatrywany koszt: " << current->current_cost << std::flush;
         }
 
         if (current->current_cost >= best_cost) {
@@ -285,7 +291,7 @@ void BranchAndBound::runLC(const std::vector<std::vector<int>>& initial_matrix, 
                     child->vertex = i;
                     child->current_cost = child_cost;
 
-                    pq.push(child);
+                    active_nodes.push_back(child);
                 }
              }
         }

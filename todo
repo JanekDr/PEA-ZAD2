@@ -1,0 +1,3 @@
+---Sprawdzić wpływ zastosowania górnego ograniczenia (wyznaczonego korzystniejszą metodą zbadaną w zadaniu 1), na złożoność czasowoą (w oparciu o wyniki badań) oraz złożóność pamięciową (w opraciu o wyniki badań oraz oszacowania teoretyczne). Metody wyznaczania górnego ograniczenia to: losowa, najbliższych sąsiadów (NN), wielokrotna najbliższych sąsiadów (RNN) bez badania remisów, z badaniami remisów
+1. Czy wystarczy zastosowac jeden algorytm ktory wyznacza to górne ograniczenie czy należy dać użytkownikowi wybor w pliku config.txt żeby samemu wybral sobie ten algorytm?
+2. Jak wykonać badania czy jeden algorytm wystarczy?
