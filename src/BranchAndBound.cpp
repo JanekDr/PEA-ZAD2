@@ -1,5 +1,7 @@
 #include "BranchAndBound.h"
 #include "RNNAlgorithm.h"
+#include "NNAlgorithm.h"
+#include "RandomAlgorithm.h"
 #include "Timer.h"
 #include "ConfigManager.h"
 #include <limits>
@@ -14,18 +16,30 @@ void BranchAndBound::run(const TSPInstance& instance, const ConfigManager& confi
     const auto& matrix = instance.getMatrix();
     
     best_cost = std::numeric_limits<long long>::max();
-    best_path.clear();
-
-    if (config.use_rnn_upper_bound) {
-        RNNAlgorithm rnn;
+    // Obliczanie początkowego ograniczenia jeśli żądane
+    if (config.upper_bound_method != "NONE") {
         ConfigManager tempConfig = config;
         tempConfig.show_progress = false; 
+
+        if (config.upper_bound_method == "RNN") {
+            RNNAlgorithm rnn;
+            rnn.run(instance, tempConfig);
+            best_cost = rnn.getBestCost();
+            best_path = rnn.getBestPath();
+        } else if (config.upper_bound_method == "NN") {
+            NNAlgorithm nn;
+            nn.run(instance, tempConfig);
+            best_cost = nn.getBestCost();
+            best_path = nn.getBestPath();
+        } else if (config.upper_bound_method == "RANDOM") {
+            RandomAlgorithm rand;
+            rand.run(instance, tempConfig);
+            best_cost = rand.getBestCost();
+            best_path = rand.getBestPath();
+        }
         
-        rnn.run(instance, tempConfig);
-        best_cost = rnn.getBestCost();
-        best_path = rnn.getBestPath();
-        if (config.show_progress) {
-            std::cout << "[B&B] Poczatkowe gorne ograniczenie z RNN: " << best_cost << std::endl;
+        if (config.show_progress && best_cost != -1) {
+            std::cout << "[B&B] Poczatkowe gorne ograniczenie z " << config.upper_bound_method << ": " << best_cost << std::endl;
         }
     }
 

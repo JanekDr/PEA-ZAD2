@@ -9,7 +9,7 @@ public:
     bool generate_symmetric;
 
     std::string algorithm;
-    bool use_rnn_upper_bound;
+    std::string upper_bound_method;
 
     int repetitions;
     long long optimal_value;

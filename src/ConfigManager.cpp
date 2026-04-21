@@ -10,7 +10,7 @@ ConfigManager::ConfigManager(const std::string& filename) {
     generate_size = 10;
     generate_symmetric = false;
     algorithm = "BB_LC";
-    use_rnn_upper_bound = true;
+    upper_bound_method = "RNN";
     repetitions = 1;
     optimal_value = -1;
     output_csv = "results/wyniki.csv";
@@ -42,7 +42,7 @@ ConfigManager::ConfigManager(const std::string& filename) {
         else if (key == "GENERATE_SIZE") generate_size = std::stoi(val);
         else if (key == "GENERATE_SYMMETRIC") generate_symmetric = (val == "1");
         else if (key == "ALGORITHM") algorithm = val;
-        else if (key == "USE_RNN_UPPER_BOUND") use_rnn_upper_bound = (val == "1");
+        else if (key == "UPPER_BOUND_METHOD") upper_bound_method = val;
         else if (key == "REPETITIONS") repetitions = std::stoi(val);
         else if (key == "OPTIMAL_VALUE") optimal_value = std::stoll(val);
         else if (key == "OUTPUT_CSV") output_csv = val;
