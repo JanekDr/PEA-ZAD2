@@ -1,0 +1,6 @@
+=== Branch and Bound TSP ===
+Wczytywanie z pliku: data/python_temp.atsp
+Rozmiar instancji: 24 miast
+Poczatkowy pobor pamieci (sama macierz): 0.00219727 MB
+
+--- Badanie algorytmu: BB_DFS_REC ---

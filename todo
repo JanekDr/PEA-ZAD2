@@ -1,3 +1,13 @@
----Sprawdzić wpływ zastosowania górnego ograniczenia (wyznaczonego korzystniejszą metodą zbadaną w zadaniu 1), na złożoność czasowoą (w oparciu o wyniki badań) oraz złożóność pamięciową (w opraciu o wyniki badań oraz oszacowania teoretyczne). Metody wyznaczania górnego ograniczenia to: losowa, najbliższych sąsiadów (NN), wielokrotna najbliższych sąsiadów (RNN) bez badania remisów, z badaniami remisów
-1. Czy wystarczy zastosowac jeden algorytm ktory wyznacza to górne ograniczenie czy należy dać użytkownikowi wybor w pliku config.txt żeby samemu wybral sobie ten algorytm?
-2. Jak wykonać badania czy jeden algorytm wystarczy?
+Dodac jeszcze algorytmy z poprzedniego zadania do wyznaczania górnego ograniczenia
+A w badaniach uwzglednic tylko jeden z nich czyli RNN
+C:\studia\PEA-ZAD2>python script_random_tests.py
+=== START DRY RUN (Sprawdzanie maksymalnego rozmiaru) ===
+Sprawdzamy algorytm BB_DFS_REC bez UB (poniewaz on najglebiej szuka i pamieta). Mozemy sprawdzic tez BFS na zacinanie.
+Testowanie rozmiaru N=11 ... Wykonano. Czas: 1.16 ms, Szczytowa Pamiec: 5780 KB
+Testowanie rozmiaru N=12 ... Wykonano. Czas: 38.93 ms, Szczytowa Pamiec: 5752 KB
+Testowanie rozmiaru N=13 ... Wykonano. Czas: 27.70 ms, Szczytowa Pamiec: 5756 KB
+Testowanie rozmiaru N=14 ... Wykonano. Czas: 52.06 ms, Szczytowa Pamiec: 5752 KB
+Testowanie rozmiaru N=15 ... Wykonano. Czas: 223.01 ms, Szczytowa Pamiec: 5780 KB
+zas: 631110.30 ms, Szczytowa Pamiec: 5872 KB
+Testowanie rozmiaru N=23 ... Wykonano. Czas: 792349.07 ms, Szczytowa Pamiec: 5868 KB
+Testowanie rozmiaru N=24 ... TIMEOUT! Czas osiagnal 900 sek (15 minut)!
