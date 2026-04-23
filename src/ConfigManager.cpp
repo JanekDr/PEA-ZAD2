@@ -4,7 +4,6 @@
 #include <sstream>
 
 ConfigManager::ConfigManager(const std::string& filename) {
-    // Domyślne wartości
     tsp_file = "data/matrix_10x10.atsp";
     generate_new = false;
     generate_size = 10;
@@ -32,7 +31,6 @@ ConfigManager::ConfigManager(const std::string& filename) {
         std::string key = line.substr(0, eq_pos);
         std::string val = line.substr(eq_pos + 1);
 
-        // Usuwanie białych znaków
         key.erase(key.find_last_not_of(" \t\r\n") + 1);
         val.erase(0, val.find_first_not_of(" \t\r\n"));
         val.erase(val.find_last_not_of(" \t\r\n") + 1);

@@ -7,7 +7,6 @@ RNNAlgorithm::RNNAlgorithm() : best_cost(-1) {}
 void RNNAlgorithm::explore(int current_node, std::vector<bool>& visited, std::vector<int>& path, 
                            long long current_cost, const std::vector<std::vector<int>>& matrix, int dimension) {
     if (path.size() == (size_t)dimension) {
-        // Graf uwzględniający powrót
         long long final_cost = current_cost + matrix[current_node][path[0]]; 
         if (best_cost == -1 || final_cost < best_cost) {
             best_cost = final_cost;
@@ -34,7 +33,6 @@ void RNNAlgorithm::explore(int current_node, std::vector<bool>& visited, std::ve
         }
     }
 
-    // Branchujemy do poszczegolnych rownie dobrych wariantow (jesli jest 1, idzie linowo)
     for (int next_node : next_nodes) {
         visited[next_node] = true;
         path.push_back(next_node);

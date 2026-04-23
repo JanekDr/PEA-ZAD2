@@ -16,7 +16,7 @@ void BranchAndBound::run(const TSPInstance& instance, const ConfigManager& confi
     const auto& matrix = instance.getMatrix();
     
     best_cost = std::numeric_limits<long long>::max();
-    // Obliczanie początkowego ograniczenia jeśli żądane
+    
     if (config.upper_bound_method != "NONE") {
         ConfigManager tempConfig = config;
         tempConfig.show_progress = false; 
